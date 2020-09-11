@@ -5,7 +5,7 @@ import Loader from "./components/loader/Loader"
 // style 
 import { GlobalStyle } from "./App.styles"
 import "./app.css"
-
+import firebaseConfig from "./firebase"
 
 const TOTAL_QUESTIONS = 10
 export type AnswerObject = {
@@ -15,6 +15,14 @@ export type AnswerObject = {
   correctAnswer: string
 }
 function App() {
+  
+  const message = firebaseConfig.messaging()
+  message.requestPermission().then(()=> {
+    return message.getToken()
+  }).then((token) => {
+    console.log("token", token);
+  })
+
   const [loading, setLoading] = useState(false)
   const [questions, setQuestions] = useState<QuestionsState[]>([])
   const [number, setNumber] = useState(0)
